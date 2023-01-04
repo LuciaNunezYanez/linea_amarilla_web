@@ -1,0 +1,19 @@
+<div class="wrapper fadeInDown">
+    <div id="formContent">
+        <!-- Tabs Titles -->
+        <h2 class="active"> INICIAR SESIÓN </h2>
+
+        <!-- Icon -->
+        <div class="fadeIn first">
+            <img src="/assets/images/logo_am.png" id="icon" style="height: 80px; width: 80px; border-radius: 5px;" />
+        </div>
+
+        <!-- Login Form -->
+        <form class="mt-2" [formGroup]="formaLogin" (ngSubmit)="comenzar()" autocomplete="off">
+            <input type="text" id="usuario" class="fadeIn second" name="usuario" placeholder="Usuario" formControlName="usuario">
+            <input type="password" id="contrasena" class="fadeIn third" name="usuario" placeholder="Contraseña" formControlName="contrasena">
+            <input type="submit" class="fadeIn fourth" value="Comenzar">
+        </form>
+
+    </div>
+</div>
