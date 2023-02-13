@@ -49,7 +49,11 @@ export class LoginComponent implements OnInit {
         // console.log(res);
         if (res.persona?.id_persona != undefined) {
           // Guardar preferencias
-          this._login.guardarSesion(res.persona.id_persona, res.persona.nombre_persona, res.persona.tipo_persona);
+          this._login.guardarSesion(res.persona.id_persona,
+            res.persona.nombre_persona,
+            res.persona.tipo_persona, 
+            res.persona.permiso_consulta, 
+            res.persona.permiso_admin);
           this.router.navigate(['/inicio']);
         } else {
           Swal.fire({

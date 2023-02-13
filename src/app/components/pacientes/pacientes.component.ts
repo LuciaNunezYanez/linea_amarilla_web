@@ -15,14 +15,12 @@ export class PacientesComponent implements OnInit {
   informacionPersona: any = {}
   informacionReferencias: any = [];
 
-  formaBusqueda: FormGroup;
+  formaBusqueda;
 
-  // dataFiltro: FiltroPersonas = {
-  //   fechai: '01/01/2022',
-  //   fechaf: '',
-  //   estatus_seguimiento: 'sin atender',
-  //   tipo_persona: 'paciente'
-  // };
+  hoy: Date;
+  diaAyer: String;
+  mes: String;
+  anio: number;
 
   // Para manejo de divs de información del paciente
   visible: boolean = true;
@@ -31,24 +29,32 @@ export class PacientesComponent implements OnInit {
   referencia: boolean = false;
   inventario: boolean = false;
 
-  preguntas = inventario;
+  preguntas = inventario;   
 
   constructor(private _personas: PersonasService, public fb: FormBuilder) {
+    this.tomarFechaHoy();
     this.inicializarForma();
     this.buscarPersonas();
   }
+
+  tomarFechaHoy(){
+    this.hoy = new Date();
+    this.diaAyer = ((this.hoy.getDate() - 1) <= 9 )? `0${this.hoy.getDate() - 1}` : `${this.hoy.getDate() - 1}`;
+    this.mes = ((this.hoy.getMonth() + 1) <= 9)? `0${this.hoy.getMonth() + 1}` : `${this.hoy.getMonth() + 1}`;
+    this.anio = this.hoy.getFullYear();
+  }
   
   inicializarForma(){
-    var hoy = new Date();
-    var diaAyer: String = ((hoy.getDate() - 1) <= 9 )? `0${hoy.getDate() - 1}` : `${hoy.getDate() - 1}`;
-    var mes: String = ((hoy.getMonth() + 1) <= 9)? `0${hoy.getMonth() + 1}` : `${hoy.getMonth() + 1}`;
-    var anio = hoy.getFullYear();
-
     this.formaBusqueda = this.fb.group({
-      fecha1: [`${anio}-${mes}-${diaAyer}`],
+      fecha1: [`${this.anio}-${this.mes}-${this.diaAyer}`],
       fecha2: [''],
       tipo_persona: ['paciente'],
-      estatus_seguimiento: ['sin atender']
+      estatus_seguimiento: ['sin atender'],
+      nombre: [''],
+      paterno: [''],
+      materno: [''],
+      telefono: [''],
+      resultado: [0]
     });
   }
 
@@ -57,24 +63,27 @@ export class PacientesComponent implements OnInit {
       fecha1: '', 
       fecha2: '', 
       tipo_persona: '',
-      estatus_seguimiento: ''
+      estatus_seguimiento: '',
+      nombre: '',
+      paterno: '',
+      materno: '',
+      telefono: '',
+      resultado: 0
     });
   }
 
   buscarPersonas() {
     // Si la fecha 2 está vacia, se le asigna el valor de hoy
     if(this.formaBusqueda.controls['fecha2'].value.length == 0){
-      var hoy = new Date();
-      var dia: String = ((hoy.getDate() - 1) <= 9 )? `0${hoy.getDate()}` : `${hoy.getDate()}`;
-      var mes: String = ((hoy.getMonth() + 1) <= 9)? `0${hoy.getMonth() + 1}` : `${hoy.getMonth() + 1}`;
-      var anio = hoy.getFullYear();
-      this.formaBusqueda.controls['fecha2'].setValue(`${anio}-${mes}-${dia}`);
+      var dia: String = ((this.hoy.getDate()) <= 9 )? `0${this.hoy.getDate()}` : `${this.hoy.getDate()}`;
+      this.formaBusqueda.controls['fecha2'].setValue(`${this.anio}-${this.mes}-${dia}`);
     }    
-    // console.log(this.formaBusqueda.value);
+    console.log(this.formaBusqueda.value);
 
     this.cerrarPersona();
     this._personas.getPersonasFiltro(this.formaBusqueda.value).subscribe((results: any) => {
       this.personas = results.personas;
+      console.log(this.personas);
     });
 
   }
@@ -123,5 +132,22 @@ export class PacientesComponent implements OnInit {
     this.direccion = direccion;
     this.referencia = referencia;
     this.inventario = inventario;
+  }
+  
+  limpiarFiltros(){ 
+    this.personas = [];
+    this.informacionPersona = {}
+    this.informacionReferencias = [];
+    this.formaBusqueda.reset({
+      fecha1: `${this.anio}-${this.mes}-${this.diaAyer}`, 
+      fecha2: '', 
+      tipo_persona: 'paciente',
+      estatus_seguimiento: 'sin atender',
+      nombre: '',
+      paterno: '',
+      materno: '',
+      telefono: '',
+      resultado: 0
+    });
   }
 }

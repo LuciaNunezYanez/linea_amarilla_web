@@ -24,12 +24,16 @@ export class LoginService {
     localStorage.removeItem('id');
     localStorage.removeItem('usuario');
     localStorage.removeItem('tipo');
+    localStorage.removeItem('c');
+    localStorage.removeItem('a');
   }
 
-  guardarSesion(id_usuario, usuario, tipo){
+  guardarSesion(id_usuario, usuario, tipo,consulta, admin){
     localStorage.setItem('id', id_usuario);
     localStorage.setItem('usuario', usuario);
     localStorage.setItem('tipo', tipo);
+    localStorage.setItem('c', consulta);
+    localStorage.setItem('a', admin);
   }
 
   leerID(){
@@ -42,5 +46,13 @@ export class LoginService {
 
   leerTipo(){
     return localStorage.getItem('tipo');
+  }
+
+  leerConsulta(){
+    return Number.parseInt(localStorage.getItem('c'));
+  }
+
+  leerAdmin(){
+    return Number.parseInt(localStorage.getItem('a'));
   }
 }

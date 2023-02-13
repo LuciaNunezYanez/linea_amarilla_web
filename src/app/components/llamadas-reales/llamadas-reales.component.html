@@ -1,0 +1,378 @@
+<app-navbar></app-navbar>
+
+<div class="row text-center">
+    <h2 class="">Llamadas reales</h2>
+</div>
+<form autocomplete="off" [formGroup]="formaBusqueda">
+    <div class="row">
+        <div class="col">
+            <div class="mb-3">
+                <label for="fecha1" class="form-label">Fecha llamada:</label>
+                <input id="fecha1" type="date" class="form-control" formControlName="fecha1">
+            </div>
+        </div>
+        <div class="col">
+            <div class="mb-3">
+                <label for="fecha2" class="form-label">Fecha fin:</label>
+                <input id="fecha2" type="date" class="form-control" formControlName="fecha2">
+            </div>
+        </div>
+        <div class="col">
+            <div class="mb-3">
+                <!-- <label for="fecha2" class="form-label">:</label>
+                <input id="fecha2" type="text" class="form-control" formControlName="motivo"> -->
+
+                <label for="selectMotivo" class="form-label">Motivo llamada:</label>
+                <select id="selectMotivo" class="form-select" formControlName="motivo">
+                    <option value="TODOS">TODOS</option>
+                    <option value="AMENAZA DE SUICIDIO">AMENAZA DE SUICIDIO</option>
+                    <option value="SUICIDIO">SUICIDIO</option>
+                </select>
+            </div>
+        </div>
+        <!-- <div class="col">
+            <div class="mb-3">
+                <label for="selectMotivo" class="form-label">Corporación:</label>
+                <select id="selectMotivo" class="form-select" formControlName="corporacion">
+                    <option value="CR DGO">CRUM DURANGO</option>
+                </select>
+            </div>
+        </div> -->
+        <div class="col">
+            <div class="mb-3">
+                <label for="fecha1" class="form-label">Nombre del denunciante:</label>
+                <input id="fecha1" type="text" class="form-control" formControlName="denunciante">
+            </div>
+        </div>
+
+        <div class="col">
+            <div class="mb-3">
+                <label for="fecha2" class="form-label">Teléfono de origen:</label>
+                <input id="fecha2" type="text" class="form-control" formControlName="telefono">
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <div class="mb-3">
+                <label for="fecha1" class="form-label">Calle de la emergencia:</label>
+                <input id="fecha1" type="text" class="form-control" formControlName="calle">
+            </div>
+        </div>
+        <div class="col-1">
+            <div class="mb-3">
+                <label for="fecha2" class="form-label">Número:</label>
+                <input id="fecha2" type="text" class="form-control" formControlName="numero">
+            </div>
+        </div>
+        <div class="col">
+            <div class="mb-3">
+                <label for="fecha2" class="form-label">Colonia:</label>
+                <input id="fecha2" type="text" class="form-control" formControlName="colonia">
+            </div>
+        </div>
+        <div class="col">
+            <div class="mb-3">
+                <!-- <label for="fecha2" class="form-label">Municipio:</label>
+                <input id="fecha2" type="text" class="form-control" formControlName="municipio"> -->
+
+                <label for="selectCentro" class="form-label">Centro/Subcentro:</label>
+                <select id="selectCentro" class="form-select" formControlName="centro" (change)="cambioCentro()">
+                    <option value="durango">DURANGO</option>
+                    <option value="salto">EL SALTO</option>
+                    <option value="santiago">SANTIAGO</option>
+                    <option value="gomez">GOMEZ</option>
+                </select>
+            </div>
+        </div>
+        <div class="col" *ngIf="this.formaBusqueda.get('centro').value == 'durango'">
+            <div class="mb-3">
+                <label for="selectMunicipio" class="form-label">Municipio:</label>
+                <select id="selectMunicipio" class="form-select" formControlName="municipio">
+                    <option value="0">TODOS</option>
+                    <option value="{{mun.id}}" *ngFor="let mun of this.municipiosDurango">{{mun.municipio | uppercase}}</option>
+                </select>
+            </div>
+        </div>
+        <div class="col" *ngIf="this.formaBusqueda.get('centro').value == 'salto'">
+            <div class="mb-3">
+                <label for="selectMunicipio" class="form-label">Municipio:</label>
+                <select id="selectMunicipio" class="form-select" formControlName="municipio">
+                    <option value="0">TODOS</option>
+                    <option value="{{mun.id}}" *ngFor="let mun of this.municipiosSalto">{{mun.municipio | uppercase}}</option>
+                </select>
+            </div>
+        </div>
+        <div class="col" *ngIf="this.formaBusqueda.get('centro').value == 'gomez'">
+            <div class="mb-3">
+                <label for="selectMunicipio" class="form-label">Municipio:</label>
+                <select id="selectMunicipio" class="form-select" formControlName="municipio">
+                    <option value="0">TODOS</option>
+                    <option value="{{mun.id}}" *ngFor="let mun of this.municipiosGomez">{{mun.municipio | uppercase}}</option>
+                </select>
+            </div>
+        </div>
+        <div class="col" *ngIf="this.formaBusqueda.get('centro').value == 'santiago'">
+            <div class="mb-3">
+                <label for="selectMunicipio" class="form-label">Municipio:</label>
+                <select id="selectMunicipio" class="form-select" formControlName="municipio">
+                    <option value="0">TODOS</option>
+                    <option value="{{mun.id}}" *ngFor="let mun of this.municipiosSantiago">{{mun.municipio | uppercase}}</option>
+                </select>
+            </div>
+        </div>
+        <div class="col-4">
+            <div class="row">
+                <div class="col-9">
+                    <div class="mb-3">
+                        <label for="fecha2" class="form-label">Filtro de descripción de la llamada:</label>
+                        <input id="fecha2" type="text" class="form-control" formControlName="descripcion">
+                    </div>
+                </div>
+                <div class="col-2 align-self-center">
+                    <div class="btn-group btn-group-lg" role="group" aria-label="Basic mixed styles example">
+                        <button type="button" class="btn btn-success" (click)="consultar()"><i
+                            class="bi bi-search"></i></button>
+                        <!-- <button type="button" class="btn btn-warning">Middle</button> -->
+                        <button type="button" class="btn btn-outline-danger" (click)="limpiar()"><i
+                            class="bi bi-trash3"></i></button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</form>
+
+
+<div class="row text-center">
+    <div class="col">
+        <h3 class="text-success">Resultados de la búsqueda</h3>
+    </div>
+    <div class="col-1 align-self-center">
+        <button class=" btn btn-outline-success btn-sm" (click)="descargarBusqueda()"><i
+            class="bi bi-arrow-down"></i>Descargar</button>
+    </div>
+
+</div>
+<div class="row mb-3">
+    <div class="table-wrapper-scroll-y my-custom-scrollbar" style="min-height: 200px;">
+
+        <table id="tablaBusqueda" class="table table-success table-hover">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Fecha</th>
+                    <th scope="col">Nombre del denunciante</th>
+                    <th scope="col">Teléfono</th>
+                    <th scope="col">Calle</th>
+                    <th scope="col">Número</th>
+                    <th scope="col">Colonia</th>
+                    <th scope="col">Municipio</th>
+                    <th scope="col"></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let ll of this.llamadas; let i=index">
+                    <td>{{i+1}}</td>
+                    <td>{{ll.FECHA_LLAMADA}}</td>
+                    <td>{{ll.NOMBRE_DENUNCIANTE}}</td>
+                    <td>{{ll.NUMERO_TELEFONO}}</td>
+                    <td>{{ll.CALLE}}</td>
+                    <td>{{ll.NUMERO}}</td>
+                    <td>{{ll.COLONIA}}</td>
+                    <td>{{ll.MUNICIPIO}}</td>
+                    <td><button class="btn btn-outline-success btn-sm" (click)="selectLlamada(i)"><i class="bi bi-eye"></i></button></td>
+
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="row text-center" *ngIf="this.llamada_visible">
+    <div class="col">
+        <h3 class="text-danger">Información de la llamada</h3>
+    </div>
+    <div class="col-2 align-self-center justify-content-end">
+        <button class=" btn btn-outline-success btn-sm" (click)="copiarLlamada()"><i
+            class="bi bi-clipboard"></i> Copiar</button>
+        <button class=" btn btn-outline-success btn-sm ms-1" (click)="descargarLlamada()"><i
+                class="bi bi-arrow-down"></i> Descargar</button>
+    </div>
+
+</div>
+<div class="row mb-5" *ngIf="this.llamada_visible">
+    <div class="table-wrapper-scroll-y my-custom-scrollbar">
+        <div class="row">
+            <div class="col">
+                <div class="mb-3">
+                    <label for="" class="form-label">Fecha:</label>
+                    <input id="" type="text" class="form-control" [value]="llamada?.FECHA_LLAMADA" disabled>
+                </div>
+            </div>
+            <div class="col">
+                <div class="mb-3">
+                    <label for="" class="form-label">Hora:</label>
+                    <input id="" type="text" class="form-control" [value]="llamada?.HORA_LLAMADA" disabled>
+                </div>
+            </div>
+            <div class="col">
+                <div class="mb-3">
+                    <label for="" class="form-label">Teléfono:</label>
+                    <input id="" type="text" class="form-control" [value]="llamada?.NUMERO_TELEFONO" disabled>
+                </div>
+            </div>
+            <div class="col">
+                <div class="mb-3">
+                    <label for="" class="form-label">Motivo:</label>
+                    <input id="" type="text" class="form-control" [value]="llamada?.MOTIVO_TELEFONISTA" disabled>
+                </div>
+            </div>
+            <div class="col">
+                <div class="mb-3">
+                    <label for="" class="form-label">A Impacto:</label>
+                    <input id="" type="text" class="form-control" [value]="llamada?.ES_ALTO_IMPACTO" disabled>
+                </div>
+            </div>
+            <div class="col">
+                <div class="mb-3">
+                    <label for="" class="form-label">No atención:</label>
+                    <input id="" type="text" class="form-control" [value]="llamada?.RAZON_NO_ATENCION" disabled>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <div class="mb-3">
+                    <label for="" class="form-label">Corporación:</label>
+                    <input id="" type="text" class="form-control" [value]="llamada?.NOMBRE_CORPORACION" disabled>
+                </div>
+            </div>
+            <div class="col">
+                <div class="mb-3">
+                    <label for="" class="form-label">Folio llamada:</label>
+                    <input id="" type="text" class="form-control" [value]="llamada?.FOLIO_LLAMADA" disabled>
+                </div>
+            </div>
+            <div class="col">
+                <div class="mb-3">
+                    <label for="" class="form-label">Prioridad:</label>
+                    <input id="" type="text" class="form-control" [value]="llamada?.PRIORIDAD" disabled>
+                </div>
+            </div>
+            <div class="col">
+                <div class="mb-3">
+                    <label for="" class="form-label">Razonamiento:</label>
+                    <input id="" type="text" class="form-control" [value]="llamada?.NOMBRE_TIPO_RAZONAMIENTO" disabled>
+                </div>
+            </div>
+            <div class="col-1">
+                <div class="mb-3">
+                    <label for="" class="form-label">Detenidos:</label>
+                    <input id="" type="text" class="form-control" [value]="llamada?.CANTIDAD_DETENIDOS" disabled>
+                </div>
+            </div>
+            <div class="col-1">
+                <div class="mb-3">
+                    <label for="" class="form-label">Lesionados:</label>
+                    <input id="" type="text" class="form-control" [value]="llamada?.CANTIDAD_LESIONADOS" disabled>
+                </div>
+            </div>
+            <div class="col-1">
+                <div class="mb-3">
+                    <label for="" class="form-label">Muertos:</label>
+                    <input id="" type="text" class="form-control" [value]="llamada?.CANTIDAD_MUERTOS" disabled>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="row">
+            <div class="col">
+                <div class="mb-3">
+                    <label for="" class="form-label">Descripción de la llamada:</label>
+                    <textarea id="" rows="3" class="form-control" [value]="llamada?.DESCRIPCION_DE_LA_LLAMADA" disabled></textarea>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col">
+                <div class="mb-3">
+                    <label for="" class="form-label">Calle:</label>
+                    <input id="" type="text" class="form-control" [value]="llamada?.CALLE" disabled>
+                </div>
+            </div>
+            <div class="col">
+                <div class="mb-3">
+                    <label for="" class="form-label">Número:</label>
+                    <input id="" type="text" class="form-control" [value]="llamada?.NUMERO" disabled>
+                </div>
+            </div>
+            <div class="col">
+                <div class="mb-3">
+                    <label for="" class="form-label">Colonia:</label>
+                    <input id="" type="text" class="form-control" [value]="llamada?.COLONIA" disabled>
+                </div>
+            </div>
+            <div class="col">
+                <div class="mb-3">
+                    <label for="" class="form-label">Entre calle:</label>
+                    <input id="" type="text" class="form-control" [value]="llamada?.ENTRE_CALLE" disabled>
+                </div>
+            </div>
+            <div class="col">
+                <div class="mb-3">
+                    <label for="" class="form-label">Coordenadas:</label>
+                    <input id="" type="text" class="form-control" value="{{llamada?.COORDENADA_X}}, {{llamada?.COORDENADA_Y}}" disabled>
+                </div>
+            </div>
+            <div class="col">
+                <div class="mb-3">
+                    <label for="" class="form-label">Municipio:</label>
+                    <input id="" type="text" class="form-control" [value]="llamada?.MUNICIPIO" disabled>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col">
+                <div class="mb-3">
+                    <label for="" class="form-label">Denunciante:</label>
+                    <input id="" type="text" class="form-control" [value]="llamada?.NOMBRE_DENUNCIANTE" disabled>
+                </div>
+            </div>
+            <div class="col">
+                <div class="mb-3">
+                    <label for="" class="form-label">Teléfono:</label>
+                    <input id="" type="text" class="form-control" [value]="llamada?.TELEFONO_DENUNCIANTE" disabled>
+                </div>
+            </div>
+            <div class="col">
+                <div class="mb-3">
+                    <label for="" class="form-label">Calle:</label>
+                    <input id="" type="text" class="form-control" [value]="llamada?.CALLE_DENUNCIANTE" disabled>
+                </div>
+            </div>
+            <div class="col">
+                <div class="mb-3">
+                    <label for="" class="form-label">Número:</label>
+                    <input id="" type="text" class="form-control" [value]="llamada?.NUMERO_DENUNCIANTE" disabled>
+                </div>
+            </div>
+            <div class="col">
+                <div class="mb-3">
+                    <label for="" class="form-label">Colonia:</label>
+                    <input id="" type="text" class="form-control" [value]="llamada?.COLONIA_DENUNCIANTE" disabled>
+                </div>
+            </div>
+            <div class="col">
+                <div class="mb-3">
+                    <label for="" class="form-label">Municipio:</label>
+                    <input id="" type="text" class="form-control" [value]="llamada?.MUNICIPIO_DENUNCIANTE" disabled>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

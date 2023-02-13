@@ -29,6 +29,24 @@ export class PersonasService {
     return this._http.get(`${this.url}/api/persona/fkpaciente/${id_paciente}`);
   }
 
+  getLlamadasReales(data: any){
+    return this._http.post(`${this.url}/api/persona/promad`, data);
+  }
+
+  editarPersonaID(data: any, id: number){
+    return this._http.put(`${this.url}/api/persona/edit/persona/unica/${id}`, data);
+  }
+
+  // PERSONA DE TIPO USUARIO INTERNO 
+  getUsuariosBusqueda(data: any){
+    return this._http.post(`${this.url}/api/persona/busqueda/usuarios`, data);
+  }
+  
+  addUsuario(data: any){
+    return this._http.post(`${this.url}/registro/persona/completa`, data);
+  }
+
+
 }
 
 

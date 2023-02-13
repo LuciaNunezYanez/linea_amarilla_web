@@ -9,6 +9,8 @@ import { LoginComponent } from './components/login/login.component';
 import { InicioComponent } from './components/inicio/inicio.component';
 import { PacientesComponent } from './components/pacientes/pacientes.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
+import { LlamadasRealesComponent } from './components/llamadas-reales/llamadas-reales.component';
+import { UsuariosComponent } from './components/usuarios/usuarios.component';
 
 @NgModule({
   declarations: [
@@ -16,7 +18,9 @@ import { NavbarComponent } from './components/navbar/navbar.component';
     LoginComponent,
     InicioComponent,
     PacientesComponent,
-    NavbarComponent
+    NavbarComponent,
+    LlamadasRealesComponent,
+    UsuariosComponent
   ],
   imports: [
     BrowserModule,

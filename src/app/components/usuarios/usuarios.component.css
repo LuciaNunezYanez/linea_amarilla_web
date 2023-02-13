@@ -1,0 +1,29 @@
+.my-custom-scrollbar {
+    /* position: c; */
+    max-height: 520px;
+    overflow: auto;
+}
+
+.table-wrapper-scroll-y {
+    display: block;
+}
+
+.my-custom-scrollbar-inv {
+    /* position: c; */
+    max-height: 600px;
+    overflow: auto;
+}
+
+.table-wrapper-scroll-y-inv {
+    display: block;
+}
+
+.wrapper {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+    width: 100%;
+    min-height: 100%;
+    padding: 20px;
+}

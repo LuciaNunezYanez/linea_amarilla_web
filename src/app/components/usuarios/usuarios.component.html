@@ -1,0 +1,244 @@
+<app-navbar></app-navbar>
+<div class="row text-center">
+    <h2>Usuarios</h2>
+</div>
+
+<div class="row justify-content-center">
+    <div class="col-12 col-xl-5 mt-3">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title text-center">Búsqueda</h5>
+                <form autocomplete="off" [formGroup]="formaBusqueda">
+                    <div class="row">
+                        <div class="col-11">
+                            <div class="row">
+                                <div class="col">
+                                    <div class="mb-3">
+                                        <label for="" class="form-label">Nombre:</label>
+                                        <input type="" class="form-control" formControlName="nombre">
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <div class="mb-3">
+                                        <label for="" class="form-label">Paterno:</label>
+                                        <input type="" class="form-control" formControlName="paterno">
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <div class="mb-3">
+                                        <label for="" class="form-label">Materno:</label>
+                                        <input type="" class="form-control" formControlName="materno">
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <div class="mb-3">
+                                        <label for="inputTelefono" class="form-label">Usuario:</label>
+                                        <input id="inputTelefono" type="" class="form-control" formControlName="usuario">
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <div class="mb-3">
+                                        <label for="" class="form-label">Tipo de usuario:</label>
+                                        <select class="form-select" formControlName="tipo">
+                                            <option value="">Todos</option>
+                                            <option value="internoc5">Interno C5</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-1 align-self-center">
+                            <div class="row align-items-center">
+                                <button class="btn btn-success" (click)=" buscarUsuarios()"><i
+                                        class="bi bi-search"></i></button>
+                                <button class="btn btn-outline-danger mt-2" (click)="limpiarFiltros()"><i
+                                        class="bi bi-trash3"></i></button>
+                            </div>
+                        </div>
+
+
+
+                        <div class="row">
+                            <div class="table-wrapper-scroll-y my-custom-scrollbar">
+
+                                <table class="table table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">Nombre completo</th>
+                                            <th scope="col">Usuario</th>
+                                            <th scope="col">Tipo</th>
+                                            <th scope="col">Estatus</th>
+                                            <th scope="col"></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngFor="let u of this.usuarios; let i = index">
+                                            <td>{{u.nombre_persona}} {{u.ap_paterno_persona}} {{u.ap_materno_persona}}
+                                            </td>
+                                            <td>{{u.usuario_persona}}</td>
+                                            <td>{{u.tipo_persona | uppercase}}</td>
+                                            <td *ngIf="u.estatus_persona == 1">ACTIVO</td>
+                                            <td *ngIf="u.estatus_persona == 0">DESACTIVADO</td>
+                                            <td>
+                                                <button class="btn btn-outline-secondary btn-sm" (click)="abrirUsuario(i)"><i class="bi bi-pencil"></i></button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+
+
+    </div>
+
+    <div class="col-12 col-xl-7 mt-3">
+        <div class="card">
+            <div class="card-body">
+                <!-- <h5 class="card-title text-center">Información<span> -->
+                <button class="btn btn-outline-info ms-2" (click)="agregarNuevoUsuario()"><i class="bi bi-person-add"></i> Agregar nuevo</button>
+                <!-- <button class="btn btn-outline-danger ms-3" (click)="cerrarUsuario()"><i
+                                class="bi bi-x-lg"></i></button> -->
+                <!-- </span> -->
+                <!-- </h5> -->
+                <hr>
+                <form autocomplete="off" [formGroup]="formaUsuario">
+                    <div class="row" *ngIf="this.selectUsuario">
+                        <div class="table-wrapper-scroll-y-inv my-custom-scrollbar-inv">
+                            <ul class="nav nav-tabs">
+                                <li class="nav-item">
+                                    <a class="nav-link active" aria-current="page">Usuario</a>
+                                </li>
+                            </ul>
+
+                            <div class="tab-content">
+                                <div id="home" class="row" *ngIf="true">
+                                    <div class="col">
+                                        <div class="row">
+                                            <div class="col">
+                                                <div class="mb-3 mt-3 row">
+                                                    <label for="" class="col-sm-3 col-form-label">Nombre (s): *</label>
+                                                    <div class="col-sm-9">
+                                                        <input type="text" class="form-control" formControlName="nombre_persona">
+                                                    </div>
+                                                </div>
+                                                <div class="mb-3 row">
+                                                    <label for="" class="col-sm-3 col-form-label">Paterno: *</label>
+                                                    <div class="col-sm-9">
+                                                        <input type="text" class="form-control" formControlName="ap_paterno_persona">
+                                                    </div>
+                                                </div>
+                                                <div class="mb-3 row">
+                                                    <label for="" class="col-sm-3 col-form-label">Materno:</label>
+                                                    <div class="col-sm-9">
+                                                        <input type="text" class="form-control" formControlName="ap_materno_persona">
+                                                    </div>
+                                                </div>
+                                                <div class="mb-3 row">
+                                                    <label for="" class="col-sm-3 col-form-label">Género:</label>
+                                                    <div class="col-sm-9">
+                                                        <select class="form-select" formControlName="genero_persona">
+                                                            <option value="">DESCONOCIDO</option>
+                                                            <option value="Mujer">Mujer</option>
+                                                            <option value="Hombre">Hombre</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="mb-3 row">
+                                                    <div class="col">
+                                                        <div class="row">
+                                                            <div class="mb-3">
+                                                                <label for="" class="form-label">Consulta:</label>
+                                                                <select class="form-select" formControlName="permiso_consulta">
+                                                                    <option value="1">SI</option>
+                                                                    <option value="0">NO</option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col">
+                                                        <div class="row">
+                                                            <div class="mb-3">
+                                                                <label for="" class="form-label">Administrador:</label>
+                                                                <select class="form-select" formControlName="permiso_admin">
+                                                                    <option value="1">SI</option>
+                                                                    <option value="0">NO</option>
+                                                                </select>
+                                                            </div>
+
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                                <div class="mb-3 row">
+
+                                                </div>
+                                            </div>
+                                            <div class="col">
+                                                <div class="mb-3 mt-3 row">
+                                                    <label for="" class="col-sm-3 col-form-label">Registro:</label>
+                                                    <div class="col-sm-9">
+                                                        <input type="text" class="form-control" formControlName="fecha_hora_registro_persona">
+                                                    </div>
+                                                </div>
+                                                <div class="mb-3 row">
+                                                    <label for="" class="col-sm-3 col-form-label">Estatus:</label>
+                                                    <div class="col-sm-9">
+                                                        <select class="form-select" formControlName="estatus_persona">
+                                                            <option value="1">ACTIVO</option>
+                                                            <option value="0">DESACTIVADO</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="mb-3 row">
+                                                    <label for="" class="col-sm-3 col-form-label">Tipo:</label>
+                                                    <div class="col-sm-9">
+                                                        <select class="form-select" formControlName="tipo_persona">
+                                                            <option value="internoc5">INTERNO C5</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="mb-3 mt-3 row">
+                                                    <label for="" class="col-sm-3 col-form-label">Teléfono:</label>
+                                                    <div class="col-sm-9">
+                                                        <input type="text" class="form-control" formControlName="telefono_persona">
+                                                    </div>
+                                                </div>
+                                                <div class="mb-3 row">
+                                                    <label for="" class="col-sm-3 col-form-label">Correo:</label>
+                                                    <div class="col-sm-9">
+                                                        <input type="text" class="form-control" formControlName="correo_persona">
+                                                    </div>
+                                                </div>
+                                                <div class="mb-3 row">
+                                                    <label for="" class="col-sm-3 col-form-label">Usuario: *</label>
+                                                    <div class="col-sm-9">
+                                                        <input type="text" class="form-control" formControlName="usuario_persona">
+                                                    </div>
+                                                </div>
+                                                <div class="mb-3 row">
+                                                    <label for="" class="col-sm-3 col-form-label">Contraseña: *</label>
+                                                    <div class="col-sm-9">
+                                                        <input type="password" class="form-control" formControlName="contrasena_persona">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <button class="btn btn-outline-success ms-2" *ngIf="this.btnEditar" (click)="guardarCambios()"><i class="bi bi-save"></i> Guardar cambios</button>
+                                        <button class="btn btn-outline-info ms-2" *ngIf="this.btnRegistrar" (click)="registrarNuevoUsuario()"><i class="bi bi-check2"></i> Registrar nuevo</button>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+</div>
